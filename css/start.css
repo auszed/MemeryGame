@@ -22,7 +22,14 @@ body{
     flex-direction: column;
     width: 100vw;
     height: 100vh;
-    background-image: url("../img/Back.gif");
+     background-image: url("../img/Back2.gif"); 
+    
+}
+#kitty{
+    position:absolute;
+bottom: 0%;
+    right: 60%;
+    width: 100%;
 }
 .container{
     display: flex;
