@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () =>{
         {
             name: 'meme_20',
             img: 'img/meme_20.png'
-        }
+        }              
     ]
 // ------------------------------------------------------------------
    
@@ -173,11 +173,15 @@ document.addEventListener('DOMContentLoaded', () =>{
     const resultDisplay = document.querySelector('#result')
     const  indicadorDisplay = document.querySelector('#indicador')
     const scoreSelector = document.querySelector('#score');
+    const exit = document.querySelector('.exit')
+    const counterClicks = document.querySelector('#counterClicks')
+    const counterCircle = document.querySelector('.counter')
     
-
+    
     cardChosen  = []
     cardChosenID = []
     cardWon = []
+    arrayClicks = []
 
 
 // ------------------------------------------------------------------
@@ -194,6 +198,8 @@ function createBoard(){
         card.addEventListener('click', flipCard)
 
         grid.appendChild(card)
+
+        
         
     }
 }
@@ -212,12 +218,15 @@ function checkMatch(){
         //atribute
         cards[optionOneId].setAttribute('src', 'img/white.png')
         cards[optionTwoId].setAttribute('src', 'img/white.png')
-   
+        cards[optionOneId].style.pointerEvents = "none"
+        cards[optionTwoId].style.pointerEvents = "none"
         cardWon.push(cardChosen)
+        arrayClicks.push(cardChosen)
     }else{
         cards[optionOneId].setAttribute('src', 'img/context.png')
         cards[optionTwoId].setAttribute('src', 'img/context.png')
         indicadorDisplay.textContent = "Try again"
+        arrayClicks.push(cardChosen)
     }
 
     // we clear the memoty of boths arrays
@@ -226,10 +235,31 @@ function checkMatch(){
 
     //the value of resultDisplay is getting from cardWon
     resultDisplay.textContent = cardWon.length
+    //counter of clicks
+    counterClicks.textContent = arrayClicks.length
+    
     if(cardWon.length === cardArray.length/2){
         resultDisplay.textContent = ""
         indicadorDisplay.textContent = ""
         scoreSelector.textContent = "congratulations you found them"
+
+        
+        let buttonEnd = document.createElement("button") 
+        let aRef = document.createElement("a")
+        let div = document.createElement("div")
+        aRef.setAttribute('href', '../index.html')
+        aRef.textContent = "Return to the menu"
+        div.textContent = "You get it done with " + arrayClicks.length + " Click's"
+        div.classList.add('textDiv')
+
+        exit.appendChild(buttonEnd)
+        buttonEnd.appendChild(aRef)
+        buttonEnd.append(div)
+        //delete the grid
+        grid.style.display = "none"
+        exit.style.display = "flex"
+        counterCircle.style.display = "none"
+        
     }
 }
 
@@ -248,7 +278,7 @@ function flipCard(){
     //check if the selected cards are equal 
     if (cardChosen.length === 2){
         //if both cards are equal run this
-        setTimeout(checkMatch, 500)
+        setTimeout(checkMatch, 400)
     }
 }
 
@@ -256,6 +286,9 @@ function flipCard(){
 createBoard()
 
 
-
+    
 
 })
+
+
+
